@@ -138,5 +138,46 @@ namespace Ksu.Cis300.NameLookup
             CheckKey(k);
             _elements = Add(_elements, k, v);
         }
+        private static BinaryTreeNode<KeyValuePair<TKey, TValue>> RemoveMininumKey(BinaryTreeNode<KeyValuePair<TKey, TValue>> t, out KeyValuePair<TKey, TValue> min)
+        {
+            if (t.LeftChild == null)
+            {
+                min = t.Data;
+                return t.RightChild;
+            }
+            else
+            {
+                return new BinaryTreeNode<KeyValuePair<TKey, TValue>>(t.Data, RemoveMininumKey(t.LeftChild, out min), t.RightChild);
+            }
+        }
+        private static BinaryTreeNode<KeyValuePair<TKey, TValue>> Remove(TKey key, BinaryTreeNode<KeyValuePair<TKey, TValue>> t, out bool removed)
+        {
+            if (t == null)
+            {
+                removed = false;
+                return t;
+            }
+            int c = key.CompareTo(t.Data.Key);
+            if (c == 0)
+            {
+                if (t.LeftChild == null)
+                {
+                    removed = true;
+                    return t.RightChild;
+                }
+                if (t.RightChild == null)
+                {
+                    removed = true;
+                    return t.LeftChild;
+                }
+                removed = true;
+                return new BinaryTreeNode<KeyValuePair<TKey, TValue>>(t.RightChild, t.LeftChild, RemoveMininumKey(t.RightChild, out KeyValuePair<TKey, TValue> min));
+            }
+            else if (c )
+        }
+        public bool Remove(TKey k)
+        {
+
+        }
     }
 }
